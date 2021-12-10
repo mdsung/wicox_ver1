@@ -1,5 +1,5 @@
 # load package
-source
+source('../settings.R')
 
 #################################### STAGE 0 ################################
 # local environment
