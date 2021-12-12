@@ -129,9 +129,13 @@ print("stage1 is finished successfully. 단계 1이 성공적으로 종료되었
 print("output 폴더에 4개의 파일이 존재하는지 확인해주십시오.")
 
 print(glue("output 폴더에 있는 total_model_{name}.rds를 stage2의 input 폴더에 복사해주십시오."))
-print(glue("output 폴더에 있는 {name}_changed.rds를 stage2의 input 폴더에 복사해주십시오."))
 print(glue("output 폴더에 있는 total_model_{name}.rds를 이메일로 보내주십시오."))
+
+print(glue("output 폴더에 있는 {name}_changed.rds를 stage2의 input 폴더에 복사해주십시오."))
 print(glue("output 폴더에 있는 Z1Z2_{name}.rds를 stage2의 input 폴더에 복사해주십시오."))
+
+print(glue("output 폴더에 있는 {name}_time.rds를 stage4의 input 폴더에 복사해주십시오."))
+print(glue("output 폴더에 있는 {name}_time.rds를 이메일로 폴더에 복사해주십시오."))
 
 print('================================================================================================')
 print("================================================================================================")

@@ -28,26 +28,34 @@
 
 ### STEP 1
 - 데이터 분할 및 cox 모형 생성단계
-    - local 환경에서
-    - input : 
-    - output :
+    - 환경 : local 환경
+    - input : 변수 추려진 원본(csv 형태)
+    - output : 1) 변수면 변형된 데이터(changed_data), 2)기관별 Z1Z2List, 3)기관별 total_model, 4)기관별 time_vector
+    - 다른 기관으로 보내야할 output : total_model_{기관}.rds, {기관}_time.rds
+        * 기관의 이름은 settings에 따라 H1, H2로 지정되게 되어 있습니다. H1은 SEV이며, H2는 NCC입니다.(참고: settings.R)
 
 ### STEP 2
 - loss 구하는 단계
-    - input : 
-    - output : 
+    - 환경 : local 환경
+    - input : 1) total_models(모든기관), 2) Z1Z2 data(local)
+    - output : loss Matrix_{기관}
+    - 다른 기관으로 보내야 할 output : 기관의 loss Matrix를 server로 보내줘야 함. 현재는 SEV로 보내주시면 됩니다.
 
 ### STEP 3
 - loss 취합 및 WIM weight 구하는 단계
-    - input : 
-    - output : 
+    - 환경 : Server(현재는 SEV가 server 역할)
+    - input : 1) loss Matrix(모든기관), 2) total_models(모든 기관)
+    - output : WIM_standard_beta, WIM_variance_adjusted_beta
+    - 다른 기관에 보내댜 할 output : 기관의 WIM_standard_beta, WIM_variance_adjusted_beta를 각 기관이 모두 공유해야 함. STEP4, STEP5의 input 폴더에 넣어줘야 함
 
 ### STEP 4
  - 각 기관별 risk list 만드는 단계
-     - input : 
-    - output : 
-
+    - 환경 : local 환경
+    - input : 1) WIM_variance_adjusted_beta, 2) {기관}_changed_data, 3) {기관}_time(모든 기관)
+    - output : {기관}_risk_share_list
+    - 다른 기관에 보내댜 할 output : risk_share_list를 server로 보내줘야 함. 
 ### STEP 5 
  - survival curve 추정하는 단계
-     - input : 
-    - output : 
+    - 환경 : Server
+    - input : 1) {기관}_risk_share_list(모든 기관), 2) WIM_variance_adjusted_beta
+    - output : base_surv_list
