@@ -46,7 +46,7 @@ Generate.Z1.Z2 <- function(local.data, predictor, p, m)
     return(list(z1.list, z2.list))
 }
 
-Z1Z2List<- Generate.Z1.Z2(df_changed, "Y", 0.75, n_I)
+Z1Z2List<- Generate.Z1.Z2(df_changed, "Y", 0.66, n_I)
 saveRDS(Z1Z2List, file = paste0(output_path, "Z1Z2_", name, ".rds"))
 
 

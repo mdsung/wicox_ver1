@@ -12,13 +12,11 @@ input_path <- here(stage0_path, "input/")
 output_path <- here(stage0_path, "output/")
 
 # 기존에 있던 코드. 일단 지우지 않음
-originalData <- read_csv(glue("stage0/input/{file_name}"))
+originalData <- read_csv(glue("stage0/input/{original_file_name}"))
 
 originalData$gender_concept_id <- ifelse(originalData$gender_concept_id == 8532, 0, 1)
 originalData <- originalData[,c("survivalTime","outcomeCount","age","gender_concept_id",
                                 "antithrombotics","HTN","DM","statin")]
-
-
 
 
 colnames2check <- colnames(originalData)[3:ncol(originalData)]
