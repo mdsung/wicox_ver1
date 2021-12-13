@@ -6,20 +6,25 @@ source('../settings.R')
 # input : 1) 각 기관의 원본 데이터를 입력해줘야 함
 # output : 2) parsing된 데이터(유효한 변수만 추려진 데이터)
 
-
 # 경로 설정
 stage0_path <- here("stage0/")
 input_path <- here(stage0_path, "input/")
 output_path <- here(stage0_path, "output/")
 
 # 기존에 있던 코드. 일단 지우지 않음
-# originalData <- read_csv("stage1/input/forSurv.csv")
+originalData <- read_csv(glue("stage0/input/{file_name}"))
+
+originalData$gender_concept_id <- ifelse(originalData$gender_concept_id == 8532, 0, 1)
+originalData <- originalData[,c("survivalTime","outcomeCount","age","gender_concept_id",
+                                "antithrombotics","HTN","DM","statin")]
+
+
 
 
 colnames2check <- colnames(originalData)[3:ncol(originalData)]
 
 checkVariable <- function(col) {
-    fit <- coxph(Surv(OVRL_SRVL_DTRN_DCNT, BSPT_SRV) ~ get(col),
+    fit <- coxph(Surv(survivalTime, outcomeCount) ~ get(col),
         data = originalData, ties = "breslow"
     )
     pvalue <- summary(fit)$logtest[[3]]
@@ -27,7 +32,6 @@ checkVariable <- function(col) {
     return(c(coeff, pvalue))
 }
 
-checkVariable("BSPT_SEX_CD")
 
 # 이제 어떤 변수가 유효한지 확인하는 for문을 돌려준다.
 checkMatrix <- matrix(nrow = length(colnames2check), ncol = 2)
@@ -40,7 +44,7 @@ for (i in seq_along(colnames2check)) {
 msk <- checkMatrix[, 2] < 0.05
 validCols <- colnames2check[msk]
 
-validCols
+pring(glue('these are the valid columns : {validCols}'))
 
 parsedData <- originalData %>% select(colnames(originalData)[1:2], validCols)
 write_csv(parsedData, glue(output_path,"{name}_data.csv"))

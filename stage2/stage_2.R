@@ -222,7 +222,7 @@ saveRDS(lossMatrix, file=glue('output/lossMatrix_{name}.rds'))
 print('=============================================================================================================')
 print('stage 2 is finished successfully. 단계 2가 성공적으로 종료되었습니다')
 print(glue('output폴더에 lossMatrix_{name}.Rds가 있는지 확인해주시고, stage 3의 input폴더로 복사해주십시오.'))
-print(glue('output폴더에 lossMatrix_{name}.Rds를 이메일로 보내주십시오'))
+print(glue('output폴더에 lossMatrix_{name}.Rdss를 이메일로 보내주십시오'))
 print("=============================================================================================================")
 
 
